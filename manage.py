@@ -3,9 +3,6 @@
 import os
 import sys
 
-print ("testing github connection")
-print ("test it again!!!")
-print ("TEST IT ONE MORE TIME")
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'storyme2.settings')
