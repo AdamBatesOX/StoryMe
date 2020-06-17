@@ -4,6 +4,7 @@ import os
 import sys
 
 print ("testing github connection")
+print ("test it again!!!")
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'storyme2.settings')
