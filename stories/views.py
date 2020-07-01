@@ -4,7 +4,7 @@ from django.shortcuts import render
 from .models import Story
 # Create your views here.
 def home_view(request, *args, **kwargs):
-    return HttpResponse("<h1>Microfiction Site<h1>")
+    return HttpResponse("<h1>This is the Microfiction Site<h1>")
 
 def story_detail_view(request, story_id,  *args, **kwargs):
     try:
