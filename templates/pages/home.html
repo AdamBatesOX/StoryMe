@@ -7,7 +7,19 @@ This is amazing!!!
 {% block content %}
 Welcome to the Microfiction Site (StoryMe3)
 
+<div id='stories'>
+    Replace me
+</div>
+
 <script>
+const storiesElement = document.getElementById("stories") // get an html element
+storiesElement.innerHTML = 'Loading...' // set new html in that element
+
+var el1 = "<h1>Hi there 1</h1>"
+var el2 = "<h1>Hi there 2</h1>"
+var el3 = "<h1>Hi there 3</h1>"
+storiesElement.innerHTML = el1 + el2 + el3
+
 const xhr = new XMLHttpRequest()
 const method = 'GET' // "Post"
 const url = "/stories"
