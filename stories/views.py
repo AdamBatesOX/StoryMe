@@ -1,3 +1,4 @@
+import random
 from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render
 
@@ -16,7 +17,7 @@ def story_list_view(request,*args, **kwargs):
     return json data
     """
     qs = Story.objects.all()
-    stories_list = [{"id": x.id, "content": x.content} for x in qs]
+    stories_list = [{"id": x.id, "content": x.content, "likes": random.randint(0, 500)} for x in qs]
     data = {
         "isUser": False,
         "response": stories_list

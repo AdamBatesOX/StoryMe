@@ -23,8 +23,20 @@ const method = 'GET' // "Post"
 const url = "/stories"
 const responseType = "json"
 
+function handleDidLike(story_id, currentCount){
+    console.log(story_id, currentCount)
+}
+
+function LikeBtn(story){
+    return "<button class='btn btn-primary btn-sm' onclick=handleDidLike(" + 
+    story.id + "," + story.likes +")>" + story.likes + " Likes</button>"
+}
+
 function formatStoryElement(story) {
-    var formattedStory = "<div class='mb-4 story' id='story-" + story.id + "'><p>" + story.content + "</p></div>"
+    var formattedStory = "<div class='mb-4 story' id='story-" + story.id 
+    + "'><p>" + story.content + 
+        "</p><div class='btn-group'>" + LikeBtn(story) +        
+        "</div></div>"
     return formattedStory    
 }
 xhr.responseType = responseType
