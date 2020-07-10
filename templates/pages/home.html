@@ -23,6 +23,10 @@ const method = 'GET' // "Post"
 const url = "/stories"
 const responseType = "json"
 
+function formatStoryElement(story) {
+    var formattedStory = "<div class='mb-4 story' id='story-" + story.id + "'><p>" + story.content + "</p></div>"
+    return formattedStory    
+}
 xhr.responseType = responseType
 xhr.open(method, url)
 xhr.onload = function(){
@@ -31,10 +35,9 @@ xhr.onload = function(){
     var finalStoryStr = ""
     var i;
     for (i=0;i<listedItems.length; i++) {
-         console.log(i)
-         console.log(listedItems[i])
-         var currentItem = "<div class='mb-4'><h1>" + listedItems[i].id + "</h1>" + "<p>" + listedItems[i].content + "</p></div>"
-             finalStoryStr += currentItem
+        var storyObj = listedItems[i]
+        var currentItem = formatStoryElement(storyObj)
+        finalStoryStr += currentItem
      }
      storiesElement.innerHTML = finalStoryStr
      // console.log(listedItems)
