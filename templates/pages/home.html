@@ -5,9 +5,15 @@ This is amazing!!!
 {% endblock head_title %}
 
 {% block content %}
-Welcome to the Microfiction Site (StoryMe3)
 
-<div id='stories'>
+<div class='row text-center'>
+    <div class='col'>
+        <h1>Welcome to MicroFictions</h1>
+    </div>
+</div>
+
+
+<div class='row' id='stories'>
     Loading...
 </div>
 
@@ -33,7 +39,7 @@ function LikeBtn(story){
 }
 
 function formatStoryElement(story) {
-    var formattedStory = "<div class='mb-4 story' id='story-" + story.id 
+    var formattedStory = "<div class='col-12 col-md-10 mx-auto border rounded py-3 mb-4 story' id='story-" + story.id 
     + "'><p>" + story.content + 
         "</p><div class='btn-group'>" + LikeBtn(story) +        
         "</div></div>"
