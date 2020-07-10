@@ -7,6 +7,8 @@ from .models import Story
 def home_view(request, *args, **kwargs):
     return render(request, "pages/home.html", context={}, status=200)
 
+
+
 def story_list_view(request,*args, **kwargs):
     """
     REST API VIEW
@@ -16,9 +18,12 @@ def story_list_view(request,*args, **kwargs):
     qs = Story.objects.all()
     stories_list = [{"id": x.id, "content": x.content} for x in qs]
     data = {
+        "isUser": False,
         "response": stories_list
     }
     return JsonResponse(data)
+
+
 
 def story_detail_view(request, story_id,  *args, **kwargs):
     """
