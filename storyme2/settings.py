@@ -26,7 +26,7 @@ SECRET_KEY = 'k@b4bsa1r96@pe#jei^bwn*(3va5)#e@hi35vmd2l-$g3mfl6u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '.cfe.sh'] # add my domain here []
 
 
 # Application definition

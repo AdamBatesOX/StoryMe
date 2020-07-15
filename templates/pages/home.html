@@ -14,7 +14,7 @@ This is amazing!!!
 
 <div class='row mb-3'>
     <div class='col-md-4 mx-auto col-10'>
-        <form class='form' method='POST' action='/create-story'>
+        <form class='form' id='story-create-form' method='POST' action='/create-story'>
             {% csrf_token %}
             <input type='hidden' value='/' name='next' />
             <textarea class='form-control' name='content' placeholder='Your story...'></textarea>
@@ -28,16 +28,41 @@ This is amazing!!!
 </div>
 
 <script>
-const storiesElement = document.getElementById("stories") // get an html element
-// storiesElement.innerHTML = 'Loading...' // set new html in that element
-// var el1 = "<h1>Hi there 1</h1>"
-// var el2 = "<h1>Hi there 2</h1>"
-// var el3 = "<h1>Hi there 3</h1>"
-// storiesElement.innerHTML = el1 + el2 + el3
-const xhr = new XMLHttpRequest()
-const method = 'GET' // "Post"
-const url = "/stories"
-const responseType = "json"
+
+
+function handleStoryCreateFormDidSubmit(event) {
+    event.preventDefault()
+    console.log(event)
+}
+const storyCreateFormEl = document.getElementById("story-create-form")
+storyCreateFormEl.addEventListener("submit", handleStoryCreateFormDidSubmit)
+
+const storiesEl = document.getElementById("stories") 
+
+function loadStories(storiesElement) {
+    const xhr = new XMLHttpRequest()
+    const method = 'GET' // "POST"
+    const url = "/stories"
+    const responseType = "json"
+    xhr.responseType = responseType
+    xhr.open(method, url)
+    xhr.onload = function(){
+        const serverResponse = xhr.response
+        const listedItems = serverResponse.response //array
+        var finalStoryStr = ""
+        var i;
+        for (i=0;i<listedItems.length; i++) {
+            var storyObj = listedItems[i]
+            var currentItem = formatStoryElement(storyObj)
+            finalStoryStr += currentItem
+        }
+        storiesElement.innerHTML = finalStoryStr
+    }
+    xhr.send()
+}
+
+loadStories(storiesEl)
+
 
 function handleDidLike(story_id, currentCount){
     console.log(story_id, currentCount)
@@ -55,22 +80,7 @@ function formatStoryElement(story) {
         "</div></div>"
     return formattedStory    
 }
-xhr.responseType = responseType
-xhr.open(method, url)
-xhr.onload = function(){
-    const serverResponse = xhr.response
-    const listedItems = serverResponse.response //array
-    var finalStoryStr = ""
-    var i;
-    for (i=0;i<listedItems.length; i++) {
-        var storyObj = listedItems[i]
-        var currentItem = formatStoryElement(storyObj)
-        finalStoryStr += currentItem
-     }
-     storiesElement.innerHTML = finalStoryStr
-     // console.log(listedItems)
-}
-xhr.send()
+
 
 </script>
 {% endblock content %}
