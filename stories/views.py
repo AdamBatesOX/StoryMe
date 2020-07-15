@@ -11,6 +11,7 @@ def home_view(request, *args, **kwargs):
 
 def story_create_view(request, *args, **kwargs):
     form = StoryForm(request.POST or None)
+    print('post data is', request.POST)
     if form.is_valid():
         obj = form.save(commit=False)
         #do other form related logic
