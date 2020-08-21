@@ -41,8 +41,13 @@ function handleStoryCreateFormDidSubmit(event) {
     xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
     xhr.onload = function(){
-        const serverResponse = xhr.response
-        console.log(xhr.status, serverResponse)
+        if (xhr.status === 201) {
+            const newStoryJson = xhr.response
+            console.log(newStoryJson.likes)
+            const newStoryElement = formatStoryElement(newStoryJson)
+            console.log(newStoryElement)
+            storiesContainerElement.prepend(newStoryElement)
+        }
     }
     xhr.send(myFormData)
 }
@@ -51,7 +56,7 @@ function handleStoryCreateFormDidSubmit(event) {
 const storyCreateFormEl = document.getElementById("story-create-form")
 storyCreateFormEl.addEventListener("submit", handleStoryCreateFormDidSubmit)
 
-const storiesEl = document.getElementById("stories") 
+const storiesContainerElement = document.getElementById("stories") 
 
 function loadStories(storiesElement) {
     const xhr = new XMLHttpRequest()
@@ -75,7 +80,7 @@ function loadStories(storiesElement) {
     xhr.send()
 }
 
-loadStories(storiesEl)
+loadStories(storiesContainerElement)
 
 
 function handleDidLike(story_id, currentCount){
