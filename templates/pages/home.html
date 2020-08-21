@@ -17,7 +17,7 @@ This is amazing!!!
         <form class='form' id='story-create-form' method='POST' action='/create-story'>
             {% csrf_token %}
             <input type='hidden' value='/' name='next' />
-            <textarea class='form-control' name='content' placeholder='Your story...'></textarea>
+            <textarea required='required' class='form-control' name='content' placeholder='Your story...'></textarea>
             <button type='submit' class='btn btn-primary'>Story</button>
         </form>
     </div>
@@ -37,21 +37,23 @@ function handleStoryCreateFormDidSubmit(event) {
     const url = myForm.getAttribute("action")
     const method = myForm.getAttribute("method")
     const xhr = new XMLHttpRequest()
+    const responseType = "json"
+    xhr.responseType = responseType
     xhr.open(method, url)
     xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
-    xhr.onload = function(){
+    xhr.onload = function() {
         if (xhr.status === 201) {
             const newStoryJson = xhr.response
-            console.log(newStoryJson.likes)
             const newStoryElement = formatStoryElement(newStoryJson)
-            console.log(newStoryElement)
-            storiesContainerElement.prepend(newStoryElement)
+            const ogHtml = storiesContainerElement.innerHTML
+            storiesContainerElement.innerHTML = newStoryElement + ogHtml   
+            myForm.reset()  
         }
+
     }
     xhr.send(myFormData)
 }
-
 
 const storyCreateFormEl = document.getElementById("story-create-form")
 storyCreateFormEl.addEventListener("submit", handleStoryCreateFormDidSubmit)
