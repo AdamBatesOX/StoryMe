@@ -32,8 +32,20 @@ This is amazing!!!
 
 function handleStoryCreateFormDidSubmit(event) {
     event.preventDefault()
-    console.log(event)
+    const myForm = event.target
+    const myFormData = new FormData(myForm)
+    const url = myForm.getAttribute("action")
+    const method = myForm.getAttribute("method")
+    const xhr = new XMLHttpRequest()
+    xhr.open(method, url)
+    xhr.onload = function(){
+        const serverResponse = xhr.response
+        console.log(serverResponse)
+    }
+    xhr.send(myFormData)
 }
+
+
 const storyCreateFormEl = document.getElementById("story-create-form")
 storyCreateFormEl.addEventListener("submit", handleStoryCreateFormDidSubmit)
 
