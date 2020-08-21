@@ -16,11 +16,12 @@ def home_view(request, *args, **kwargs):
 def story_create_view(request, *args, **kwargs):
     form = StoryForm(request.POST or None)
     next_url = request.POST.get("next") or None
-    print("next_url", next_url)
     if form.is_valid():
         obj = form.save(commit=False)
         #do other form related logic
         obj.save()
+        if request.is_ajax():
+            return JsonResponse({}, status=201) # 201 == created items
         if next_url != None and is_safe_url(next_url, ALLOWED_HOSTS):
              return redirect(next_url)
         form = StoryForm()
