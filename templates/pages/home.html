@@ -16,6 +16,7 @@ This is amazing!!!
     <div class='col-md-4 mx-auto col-10'>
         <form class='form' id='story-create-form' method='POST' action='/create-story'>
             {% csrf_token %}
+            <div class='d-none alert alert-danger' id='story-create-form-error'></div>
             <input type='hidden' value='/' name='next' />
             <textarea required='required' class='form-control' name='content' placeholder='Your story...'></textarea>
             <button type='submit' class='btn btn-primary'>Story</button>
@@ -29,6 +30,17 @@ This is amazing!!!
 
 <script>
 
+function handleStoryFormError(msg, display){
+    var myErrorDiv = document.getElementById("story-create-form-error")
+    if (display === true) {
+        // show error
+        myErrorDiv.setAttribute("class", "d-block alert alert-danger")
+        myErrorDiv.innerText = msg
+    } else {
+        // hide error
+        myErrorDiv.setAttribute("class", "d-none alert alert-danger")
+    }
+}
 
 function handleStoryCreateFormDidSubmit(event) {
     event.preventDefault()
@@ -44,6 +56,7 @@ function handleStoryCreateFormDidSubmit(event) {
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
     xhr.onload = function() {
         if (xhr.status === 201) {
+            handleStoryFormError("", false)
             const newStoryJson = xhr.response
             const newStoryElement = formatStoryElement(newStoryJson)
             const ogHtml = storiesContainerElement.innerHTML
@@ -51,7 +64,19 @@ function handleStoryCreateFormDidSubmit(event) {
             myForm.reset()  
         } else if (xhr.status === 400) {
             const errorJson = xhr.response
-            console.log(errorJson)
+            const contentError = errorJson.content
+            let contentErrorMsg;
+            if (contentError) {
+                contentErrorMsg = contentError[0]
+                if (contentErrorMsg) {
+                    handleStoryFormError(contentErrorMsg, true)
+                } else {
+                    alert("An error occurred. Please try again.")
+                }
+                
+            } else {
+                alert("An error occured. Please try again.")
+            }
         } else if (xhr.status === 500) {
             alert("There was a server error, please try again.")
         }

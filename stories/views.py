@@ -14,7 +14,6 @@ def home_view(request, *args, **kwargs):
     return render(request, "pages/home.html", context={}, status=200)
 
 def story_create_view(request, *args, **kwargs):
-    print(abc)
     form = StoryForm(request.POST or None)
     next_url = request.POST.get("next") or None
     if form.is_valid():
