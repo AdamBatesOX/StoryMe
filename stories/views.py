@@ -14,6 +14,7 @@ def home_view(request, *args, **kwargs):
     return render(request, "pages/home.html", context={}, status=200)
 
 def story_create_view(request, *args, **kwargs):
+    print(abc)
     form = StoryForm(request.POST or None)
     next_url = request.POST.get("next") or None
     if form.is_valid():
@@ -25,6 +26,9 @@ def story_create_view(request, *args, **kwargs):
         if next_url != None and is_safe_url(next_url, ALLOWED_HOSTS):
              return redirect(next_url)
         form = StoryForm()
+    if form.errors:
+        if request.is_ajax():
+            return JsonResponse(form.errors, status=400)
     return render(request, 'components/form.html', context={"form": form})
 
 def story_list_view(request,*args, **kwargs):
