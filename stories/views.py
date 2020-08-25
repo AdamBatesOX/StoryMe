@@ -46,7 +46,7 @@ def story_list_view(request,*args, **kwargs):
 
 
 
-def story_detail_view(request, story_id,  *args, **kwargs):
+def story_detail_view(request, story_id, *args, **kwargs):
     """
     REST API VIEW
     Consume by JavaScript or Swift/Java/iOS/Android
@@ -60,6 +60,6 @@ def story_detail_view(request, story_id,  *args, **kwargs):
         obj = Story.objects.get(id=story_id)
         data['content'] = obj.content
     except:
-        data['message'] - "Not found"
+        data['message'] = "Not found"
         status = 404
-    return JsonResponse(data, status=status) # json.dumps content_type='application/json'python3 
+    return JsonResponse(data, status=status) # json.dumps content_type='application/json' 

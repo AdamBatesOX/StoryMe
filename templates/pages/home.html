@@ -100,7 +100,7 @@ function loadStories(storiesElement) {
     const responseType = "json"
     xhr.responseType = responseType
     xhr.open(method, url)
-    xhr.onload = function(){
+    xhr.onload = function() {
         const serverResponse = xhr.response
         const listedItems = serverResponse.response //array
         var finalStoryStr = ""
